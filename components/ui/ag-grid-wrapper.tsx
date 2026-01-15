@@ -36,6 +36,7 @@ export interface AgGridWrapperProps {
   columnDefs: ColDef[];
   onRowClick?: (data: any) => void;
   onSelectionChanged?: (selectedRows: any[]) => void;
+  onGridReady?: (event: GridReadyEvent) => void;
   className?: string;
   height?: string;
   rowSelection?: 'single' | 'multiple';
@@ -45,6 +46,7 @@ export interface AgGridWrapperProps {
   pagination?: boolean;
   paginationPageSize?: number;
   getRowClass?: (params: any) => string;
+  getRowId?: (params: { data: any }) => string;
 }
 
 export interface AgGridWrapperRef {
@@ -68,6 +70,8 @@ export const AgGridWrapper = forwardRef<AgGridWrapperRef, AgGridWrapperProps>(({
   pagination = true,
   paginationPageSize = 20,
   getRowClass,
+  getRowId,
+  onGridReady: onGridReadyProp,
 }, ref) => {
   const gridRef = useRef<AgGridReact>(null);
 
@@ -80,7 +84,10 @@ export const AgGridWrapper = forwardRef<AgGridWrapperRef, AgGridWrapperProps>(({
 
   const onGridReady = useCallback((params: GridReadyEvent) => {
     params.api.sizeColumnsToFit();
-  }, []);
+    if (onGridReadyProp) {
+      onGridReadyProp(params);
+    }
+  }, [onGridReadyProp]);
 
   const onRowClicked = useCallback((event: RowClickedEvent) => {
     if (onRowClick && event.data) {
@@ -164,6 +171,7 @@ export const AgGridWrapper = forwardRef<AgGridWrapperRef, AgGridWrapperProps>(({
         enableCellTextSelection={true}
         ensureDomOrder={true}
         getRowClass={getRowClass}
+        getRowId={getRowId}
       />
     </div>
   );

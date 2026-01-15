@@ -1,7 +1,7 @@
 import { RawNewsItem } from './types';
 
 const GOOGLE_NEWS_ENV_HINT =
-  'Set GOOGLE_API_KEY and GOOGLE_SEARCH_ENGINE_ID to enable real news search via Google CSE.';
+  'Set GOOGLE_API_KEY and GOOGLE_CSE_ID to enable real news search via Google CSE.';
 
 type GoogleCseItem = {
   title?: string;
@@ -55,7 +55,7 @@ const buildGoogleQuery = (query: string) => `${query} news fintech device financ
 const fetchGoogleNews = async (query: string, count: number): Promise<RawNewsItem[]> => {
   // To enable real news search, configure the same Google CSE env vars used elsewhere.
   const apiKey = process.env.GOOGLE_API_KEY;
-  const searchEngineId = process.env.GOOGLE_SEARCH_ENGINE_ID;
+  const searchEngineId = process.env.GOOGLE_CSE_ID ?? process.env.GOOGLE_SEARCH_ENGINE_ID;
 
   if (!apiKey || !searchEngineId) {
     console.warn(GOOGLE_NEWS_ENV_HINT);
