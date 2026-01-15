@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
 
     // Check if Google API credentials are configured
     const apiKey = process.env.GOOGLE_API_KEY
-    const searchEngineId = process.env.GOOGLE_SEARCH_ENGINE_ID
+    const searchEngineId = process.env.GOOGLE_CSE_ID ?? process.env.GOOGLE_SEARCH_ENGINE_ID
 
     if (!apiKey || !searchEngineId) {
       console.warn("Google API credentials not configured, falling back to alternative search")
@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
       }
 
       return NextResponse.json({
-        error: "Google API credentials not configured. Please set GOOGLE_API_KEY and GOOGLE_SEARCH_ENGINE_ID environment variables.",
+        error: "Google API credentials not configured. Please set GOOGLE_API_KEY and GOOGLE_CSE_ID environment variables.",
         companies: []
       }, { status: 503 })
     }

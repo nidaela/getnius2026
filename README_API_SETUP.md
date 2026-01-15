@@ -26,7 +26,7 @@ Create a `.env.local` file in your project root:
 
 ```env
 GOOGLE_API_KEY=your_actual_api_key_here
-GOOGLE_SEARCH_ENGINE_ID=your_actual_search_engine_id_here
+GOOGLE_CSE_ID=your_actual_search_engine_id_here
 ```
 
 ### 4. Restart Development Server
@@ -35,6 +35,14 @@ After adding environment variables, restart your dev server:
 ```bash
 npm run dev
 ```
+
+### 5. Vercel Environment Variables
+In Vercel, add the same keys under Project Settings → Environment Variables:
+
+- `GOOGLE_API_KEY`
+- `GOOGLE_CSE_ID`
+
+After saving, redeploy the project to pick up the new values.
 
 ## Alternative APIs (Optional)
 
